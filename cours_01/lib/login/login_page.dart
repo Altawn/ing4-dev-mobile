@@ -1,5 +1,6 @@
 import 'package:cours_01/res/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ContinueButton extends StatelessWidget {
   const ContinueButton({this.onPressed, super.key});
@@ -11,11 +12,11 @@ class ContinueButton extends StatelessWidget {
   }
 }
 
-class GoogleButton extends StatelessWidget {
-  const GoogleButton({
-    this.onPressed,
+class BrandedButton extends StatelessWidget {
+  const BrandedButton({
     required this.text,
     required this.image,
+    this.onPressed,
     super.key,
   });
   final VoidCallback? onPressed;
@@ -26,7 +27,12 @@ class GoogleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: onPressed,
-      child: Row(children: <Widget>[Image.asset(image), Text(text)]),
+      child: Row(
+        children: <Widget>[
+          SvgPicture.asset(image, height: 20, width: 20),
+          Text(text),
+        ],
+      ),
     );
   }
 }
@@ -85,10 +91,28 @@ class LoginPage extends StatelessWidget {
         children: <Widget>[
           TextFieldEmail(text: 'Email Address', image: 'mail-image-icon.svg'),
           ContinueButton(onPressed: () {}),
-          GoogleButton(
+          BrandedButton(
             onPressed: () {},
             text: 'Continue with Google',
-            image: 'google_logo.svg',
+            image: 'assets/google_logo.svg',
+          ),
+          BrandedButton(
+            onPressed: () {},
+            text: 'Continue with Facebook',
+            image: 'assets/facebook_logo.svg',
+          ),
+          BrandedButton(
+            onPressed: () {},
+            text: 'Continue with Apple',
+            image: 'assets/apple_logo.svg',
+          ),
+          FilledButton(
+            onPressed: () {},
+            style: FilledButton.styleFrom(
+              foregroundColor: AppColors.buttonPrimaryText,
+              backgroundColor: AppColors.buttonPrimaryBackground,
+            ),
+            child: const Text('Continue'),
           ),
         ],
       ),

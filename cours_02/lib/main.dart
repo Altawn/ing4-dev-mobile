@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: AppColors.nutriscoreA),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.nutriscoreA),
         fontFamily: 'Avenir',
         textTheme: TextTheme(headlineMedium: TextStyle()),
       ),

@@ -38,16 +38,23 @@ class BrandedButton extends StatelessWidget {
 }
 
 class TextFieldEmail extends StatelessWidget {
-  const TextFieldEmail({required this.text, required this.image, super.key});
+  const TextFieldEmail({
+    required this.text,
+    required this.image,
+    this.onChanged,
+    super.key,
+  });
 
   final String text;
   final String image;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 250,
       child: TextField(
+        onChanged: onChanged,
         autofocus: false,
         decoration: InputDecoration(
           icon: const Icon(Icons.email_outlined),
@@ -71,8 +78,16 @@ class TextFieldEmail extends StatelessWidget {
   }
 }
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String _email = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +104,15 @@ class LoginPage extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          TextFieldEmail(text: 'Email Address', image: 'mail-image-icon.svg'),
+          TextFieldEmail(
+            text: 'Email Address',
+            image: 'mail-image-icon.svg',
+            onChanged: (value) {
+              setState(() {
+                _email = value;
+              });
+            },
+          ),
           ContinueButton(onPressed: () {}),
           BrandedButton(
             onPressed: () {},
@@ -107,7 +130,7 @@ class LoginPage extends StatelessWidget {
             image: 'assets/apple_logo.svg',
           ),
           FilledButton(
-            onPressed: () {},
+            onPressed: _email.isNotEmpty ? () {} : null,
             style: FilledButton.styleFrom(
               foregroundColor: AppColors.buttonPrimaryText,
               backgroundColor: AppColors.buttonPrimaryBackground,

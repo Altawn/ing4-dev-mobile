@@ -10,7 +10,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery.heightOf(context);
     AppLocalizations localizations = AppLocalizations.of(context)!;
 
     return Scaffold(

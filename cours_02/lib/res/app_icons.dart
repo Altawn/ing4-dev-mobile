@@ -13,6 +13,8 @@
 ///
 ///
 ///
+library;
+
 import 'package:flutter/widgets.dart';
 
 class AppIcons {
@@ -21,36 +23,43 @@ class AppIcons {
   static const _kFontFam = 'AppIcons';
   static const String? _kFontPkg = null;
 
+  // ignore: constant_identifier_names
   static const IconData ecoscore_a = IconData(
     0xe800,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData ecoscore_b = IconData(
     0xe801,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData ecoscore_c = IconData(
     0xe802,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData ecoscore_d = IconData(
     0xe803,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData ecoscore_e = IconData(
     0xe804,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData ecoscore_f = IconData(
     0xe805,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData ecoscore_a_plus = IconData(
     0xe806,
     fontFamily: _kFontFam,
@@ -76,21 +85,25 @@ class AppIcons {
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData tab_array = IconData(
     0xe80b,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData tab_barcode = IconData(
     0xe80c,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData tab_fridge = IconData(
     0xe80d,
     fontFamily: _kFontFam,
     fontPackage: _kFontPkg,
   );
+  // ignore: constant_identifier_names
   static const IconData tab_nutrition = IconData(
     0xe80e,
     fontFamily: _kFontFam,

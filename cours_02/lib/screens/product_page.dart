@@ -8,6 +8,7 @@ import 'package:formation_flutter/res/app_theme_extension.dart';
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
 
+  // ignore: constant_identifier_names
   static const double IMAGE_HEIGHT = 300.0;
 
   @override

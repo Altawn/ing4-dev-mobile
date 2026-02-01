@@ -4,6 +4,7 @@ import 'package:formation_flutter/model/product.dart';
 import 'package:formation_flutter/res/app_colors.dart';
 import 'package:formation_flutter/res/app_icons.dart';
 import 'package:formation_flutter/res/app_theme_extension.dart';
+import 'package:formation_flutter/model/inheritedWidget.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
@@ -13,54 +14,68 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox.expand(
-        child: Stack(
-          children: [
-            PositionedDirectional(
-              top: 0.0,
-              start: 0.0,
-              end: 0.0,
-              height: IMAGE_HEIGHT,
-              child: Image.network(
-                'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1310&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                fit: BoxFit.cover,
-                cacheHeight:
-                    (IMAGE_HEIGHT * MediaQuery.devicePixelRatioOf(context))
-                        .toInt(),
-              ),
-            ),
-            PositionedDirectional(
-              top: IMAGE_HEIGHT - 16.0,
-              start: 0.0,
-              end: 0.0,
-              bottom: 0.0,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(16.0),
-                  ),
-                  color: Colors.white,
-                ),
-                padding: EdgeInsetsDirectional.symmetric(
-                  horizontal: 20.0,
-                  vertical: 30.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: .start,
-                  children: [
-                    Text(
-                      'Petits pois et carottes',
-                      style: context.theme.title1,
+    return InhProWidget(
+      produit: generateProduct(),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            body: SizedBox.expand(
+              child: Stack(
+                children: [
+                  PositionedDirectional(
+                    top: 0.0,
+                    start: 0.0,
+                    end: 0.0,
+                    height: IMAGE_HEIGHT,
+                    child: Image.network(
+                      InhProWidget.of(context).produit.picture ?? '',
+                      fit: BoxFit.cover,
+                      cacheHeight:
+                          (IMAGE_HEIGHT *
+                                  MediaQuery.devicePixelRatioOf(context))
+                              .toInt(),
                     ),
-                    Text('Cassegrain', style: context.theme.title2),
-                    Scores(),
-                  ],
-                ),
+                  ),
+                  PositionedDirectional(
+                    top: IMAGE_HEIGHT - 16.0,
+                    start: 0.0,
+                    end: 0.0,
+                    bottom: 0.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(16.0),
+                        ),
+                        color: Colors.white,
+                      ),
+                      padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: 20.0,
+                        vertical: 30.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: .start,
+                        children: [
+                          Text(
+                            InhProWidget.of(context).produit.name ?? '',
+                            style: context.theme.title1,
+                          ),
+                          Text(
+                            InhProWidget.of(
+                                  context,
+                                ).produit.brands?.join(', ') ??
+                                '',
+                            style: context.theme.title2,
+                          ),
+                          Scores(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -77,32 +92,28 @@ class Scores extends StatelessWidget {
           child: Row(
             crossAxisAlignment: .start,
             children: [
-              Expanded(
-                flex: 44,
-                child: _Nutriscore(nutriscore: ProductNutriScore.B),
-              ),
+              Expanded(flex: 44, child: const _Nutriscore()),
               VerticalDivider(),
-              Expanded(
-                flex: 56,
-                child: _NovaGroup(novaScore: ProductNovaScore.group4),
-              ),
+              Expanded(flex: 56, child: const _NovaGroup()),
             ],
           ),
         ),
         Divider(),
-        _GreenScore(greenScore: ProductGreenScore.A),
+        const _GreenScore(),
       ],
     );
   }
 }
 
 class _Nutriscore extends StatelessWidget {
-  const _Nutriscore({required this.nutriscore});
-
-  final ProductNutriScore nutriscore;
+  const _Nutriscore();
 
   @override
   Widget build(BuildContext context) {
+    final nutriscore =
+        InhProWidget.of(context).produit.nutriScore ??
+        ProductNutriScore.unknown;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,12 +123,12 @@ class _Nutriscore extends StatelessWidget {
           style: context.theme.title3,
         ),
         const SizedBox(height: 5.0),
-        Image.asset(_findAssetName(), height: 42.0),
+        Image.asset(_findAssetName(nutriscore), height: 42.0),
       ],
     );
   }
 
-  String _findAssetName() {
+  String _findAssetName(ProductNutriScore nutriscore) {
     return switch (nutriscore) {
       ProductNutriScore.A => 'res/drawables/nutriscore_a.png',
       ProductNutriScore.B => 'res/drawables/nutriscore_b.png',
@@ -130,12 +141,13 @@ class _Nutriscore extends StatelessWidget {
 }
 
 class _NovaGroup extends StatelessWidget {
-  const _NovaGroup({required this.novaScore});
-
-  final ProductNovaScore novaScore;
+  const _NovaGroup();
 
   @override
   Widget build(BuildContext context) {
+    final novaScore =
+        InhProWidget.of(context).produit.novaScore ?? ProductNovaScore.unknown;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,12 +157,15 @@ class _NovaGroup extends StatelessWidget {
           style: context.theme.title3,
         ),
         const SizedBox(height: 5.0),
-        Text(_findLabel(), style: const TextStyle(color: AppColors.grey2)),
+        Text(
+          _findLabel(novaScore),
+          style: const TextStyle(color: AppColors.grey2),
+        ),
       ],
     );
   }
 
-  String _findLabel() {
+  String _findLabel(ProductNovaScore novaScore) {
     return switch (novaScore) {
       ProductNovaScore.group1 =>
         'Aliments non transformés ou transformés minimalement',
@@ -164,12 +179,14 @@ class _NovaGroup extends StatelessWidget {
 }
 
 class _GreenScore extends StatelessWidget {
-  const _GreenScore({required this.greenScore});
-
-  final ProductGreenScore greenScore;
+  const _GreenScore();
 
   @override
   Widget build(BuildContext context) {
+    final greenScore =
+        InhProWidget.of(context).produit.greenScore ??
+        ProductGreenScore.unknown;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,11 +198,11 @@ class _GreenScore extends StatelessWidget {
         const SizedBox(height: 5.0),
         Row(
           children: <Widget>[
-            Icon(_findIcon(), color: _findIconColor()),
+            Icon(_findIcon(greenScore), color: _findIconColor(greenScore)),
             const SizedBox(width: 10.0),
             Expanded(
               child: Text(
-                _findLabel(),
+                _findLabel(greenScore),
                 style: const TextStyle(color: AppColors.grey2),
               ),
             ),
@@ -195,7 +212,7 @@ class _GreenScore extends StatelessWidget {
     );
   }
 
-  IconData _findIcon() {
+  IconData _findIcon(ProductGreenScore greenScore) {
     return switch (greenScore) {
       ProductGreenScore.APlus => AppIcons.ecoscore_a_plus,
       ProductGreenScore.A => AppIcons.ecoscore_a,
@@ -208,7 +225,7 @@ class _GreenScore extends StatelessWidget {
     };
   }
 
-  Color _findIconColor() {
+  Color _findIconColor(ProductGreenScore greenScore) {
     return switch (greenScore) {
       ProductGreenScore.APlus => AppColors.greenScoreAPlus,
       ProductGreenScore.A => AppColors.greenScoreA,
@@ -221,7 +238,7 @@ class _GreenScore extends StatelessWidget {
     };
   }
 
-  String _findLabel() {
+  String _findLabel(ProductGreenScore greenScore) {
     return switch (greenScore) {
       ProductGreenScore.APlus => 'Très faible impact environnemental',
       ProductGreenScore.A => 'Très faible impact environnemental',

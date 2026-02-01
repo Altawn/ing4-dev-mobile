@@ -1,0 +1,1 @@
+ C:\\Users\\Ronan\\Documents\\GitHub\\ing4-dev-mobile\\cours_02\\.dart_tool\\flutter_build\\a7ede9d43a41bedf93a6c8815bdc4e60\\native_assets.json: 

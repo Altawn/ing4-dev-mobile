@@ -8,9 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:formation_flutter/model/change_notifier.dart';
 
 class ProductPage extends StatelessWidget {
-  const ProductPage({super.key, required this.isLoading});
-
-  final bool isLoading;
+  const ProductPage({super.key});
 
   @override
   Widget build(BuildContext context) {
